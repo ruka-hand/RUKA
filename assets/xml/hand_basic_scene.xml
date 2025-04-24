@@ -1,0 +1,67 @@
+<!-- Main model definition for the hand-box scene -->
+<mujoco model="hand_box_scene">
+    <!-- Include external hand assembly configuration -->
+    <include file="hand_assembly.xml"/>
+
+    <!-- Statistics for the scene -->
+    <statistic center="0.15 0 0" extent="0.4" meansize="0.01"/>
+
+    <!-- Visual settings for the scene -->
+    <visual>
+        <!-- Headlight settings -->
+        <headlight diffuse=".8 .8 .8" ambient=".2 .2 .2" specular="1 1 1"/>
+        <!-- Force color settings -->
+        <rgba force="1 0 0 1"/>
+        <!-- Global camera settings -->
+        <global azimuth="120" elevation="-20"/>
+        <!-- Force map settings -->
+        <map force="0.01" stiffness="500"/>
+        <!-- Scale settings for force and contact visuals -->
+        <scale forcewidth="0.1" contactwidth="0.5" contactheight="0.2"/>
+        <!-- Quality settings for shadows -->
+        <quality shadowsize="8192"/>
+    </visual>
+
+    <!-- Asset definitions -->
+    <asset>
+        <!-- Skybox texture settings -->
+        <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="1 1 1" width="800" height="800"/>
+        <!-- Ground plane texture settings -->
+        <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="1 1 1" rgb2="1 1 1" markrgb="0 0 0"
+          width="300" height="300"/>
+        <!-- Material settings for the ground plane -->
+        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0"/>
+    </asset>
+
+    <!-- World body definitions -->
+    <worldbody>
+        <!-- Site definition for the world -->
+        <site name="world" pos="0.0054 0.0442 -0.05" size="0.001"/>
+        <!-- Camera settings for side view -->
+        <camera name="side" pos="-0.183 0.396 0.296" xyaxes="-0.783 -0.622 -0.000 0.332 -0.419 0.845"/>
+        <!-- Ground geometry settings -->
+        <geom name="ground" type="plane" friction="1.5 0.005 0.001" size="5.5 5.5 0.1" rgba=".9 .9 .9 1.0" material="grid" pos= "0 -0.07 0" euler="1.57 3.1415 0"/>
+    </worldbody>
+
+    <!-- Simulation options -->
+    <option gravity="0 -9.81 0"/>
+
+    <!-- Keyframe settings for initial positions and controls -->
+    <keyframe>
+        <key name="home"
+          qpos="
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+          "
+          ctrl="
+           0 0 0
+           0 0 0
+           0 0 0
+           0 0 0
+           0 0 0
+          "
+        />
+    </keyframe>
+</mujoco>

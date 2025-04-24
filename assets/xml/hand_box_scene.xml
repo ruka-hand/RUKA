@@ -1,0 +1,72 @@
+<mujoco model="hand_box_scene">
+    <!-- Include external XML files for hand assembly and reorientation cube -->
+    <include file="hand_assembly.xml"/>
+    <include file="reorientation_cube.xml"/>
+
+    <!-- Define statistics for the scene -->
+    <statistic center="0.15 0 0" extent="0.4" meansize="0.01"/>
+
+    <!-- Visual settings for the scene -->
+    <visual>
+        <headlight diffuse=".8 .8 .8" ambient=".2 .2 .2" specular="1 1 1"/>
+        <rgba force="1 0 0 1"/>
+        <global azimuth="120" elevation="-20"/>
+        <map force="0.01" stiffness="500"/>
+        <scale forcewidth="0.1" contactwidth="0.5" contactheight="0.2"/>
+        <quality shadowsize="8192"/>
+    </visual>
+
+    <!-- Asset definitions for textures and materials -->
+    <asset>
+        <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="1 1 1" width="800" height="800"/>
+        <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="1 1 1" rgb2="1 1 1" markrgb="0 0 0"
+          width="300" height="300"/>
+        <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5" reflectance="0"/>
+    </asset>
+
+    <!-- World body definitions including sites, cameras, and ground plane -->
+    <worldbody>
+        <site name="world" pos="0.0054 0.0442 -0.05" size="0.001"/>
+        <camera name="side" pos="-0.183 0.396 0.296" xyaxes="-0.783 -0.622 -0.000 0.332 -0.419 0.845"/>
+        <geom name="ground" type="plane" friction="1.5 0.005 0.001" size="5.5 5.5 0.1" rgba=".9 .9 .9 1.0" material="grid" pos="0 -0.07 0" euler="1.57 3.1415 0"/>
+    </worldbody>
+
+    <!-- Simulation options such as gravity -->
+    <option gravity="0 -9.81 0"/>
+
+    <!-- Sensor definitions for tracking positions and velocities -->
+    <sensor>
+        <framepos name="cube_position" objtype="site" objname="cube_center" reftype="site" refname="world"/>
+        <framequat name="cube_orientation" objtype="xbody" objname="cube" reftype="site" refname="world"/>
+        <framelinvel name="cube_linvel" objtype="xbody" objname="cube" reftype="site" refname="world"/>
+        <frameangvel name="cube_angvel" objtype="xbody" objname="cube" reftype="site" refname="world"/>
+        <gyro name="cube_self_rotation" site="cube_center"/>
+
+        <!-- Information about the hand's finger positions -->
+        <framepos name="thumb_position" objtype="geom" objname="Thumb_TIP" reftype="site" refname="world"/>
+        <framepos name="index_position" objtype="geom" objname="Index_TIP" reftype="site" refname="world"/>
+        <framepos name="middle_position" objtype="geom" objname="Middle_TIP" reftype="site" refname="world"/>
+        <framepos name="ring_position" objtype="geom" objname="Ring_TIP" reftype="site" refname="world"/>
+        <framepos name="pinky_position" objtype="geom" objname="Pinky_TIP" reftype="site" refname="world"/>
+    </sensor>
+
+    <!-- Keyframe definitions for initial positions and controls -->
+    <keyframe>
+        <key name="home"
+          qpos="
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0 0 0 0
+            0.007 0.06 -0.05 1 0 0 0
+          "
+          ctrl="
+           0 0 0
+           0 0 0
+           0 0 0
+           0 0 0
+           0 0 0
+          "
+        />
+    </keyframe>
+</mujoco>

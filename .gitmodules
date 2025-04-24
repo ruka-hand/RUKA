@@ -1,0 +1,3 @@
+[submodule "submodules/Bidex_Manus_Teleop"]
+	path = submodules/Bidex_Manus_Teleop
+	url = https://github.com/NYU-robot-learning/Bidex_Manus_Teleop.git

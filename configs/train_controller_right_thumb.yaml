@@ -1,0 +1,74 @@
+# Training parameters
+optimizer:
+  lr: 5e-4
+  weight_decay: 0
+
+learner:
+  cfg: ???
+  loss_fn_reduction: sum
+  name: lstm_mlp_enc_dec
+
+train_epochs: 1001
+root_dir: <root_dir>
+
+# Model parameters
+net:
+  input_dim: ??? 
+  output_dim: ???
+  encoder:
+    output_dim: 64
+    hidden_dim: 128 
+    lstm_hidden_dim: 128
+    nlayers: 2
+    dropout: 0.1
+    obs_horizon: ${dataset.obs_horizon}
+
+  decoder:
+    pred_horizon: ${dataset.pred_horizon}
+    hidden_dims: [128,128,128]
+    use_batchnorm: False
+    dropout: null
+
+# Dataset parameters
+all_data_directories:
+  - ruka_data/osfstorage/data/right_thumb_1
+  - ruka_data/osfstorage/data/right_thumb_2
+hand_type: right
+
+dataset: 
+  _target_: ruka_hand.learning.dataset.AllHandDataMotor
+  data_dir: ??? 
+  finger_name: Thumb 
+  model_type: inverse 
+  input_type: fingertips
+  motor_data_type: present
+  subsample: False
+  obs_horizon: 10
+  pred_horizon: 1
+  predict_residual: False
+  state_as_input: False
+  fingertip_mean_std_norm: True
+
+train_dset_split: 0.9
+batch_size: 2096
+
+# Environment parameters
+seed: 5
+device: cuda
+num_workers: 16
+
+log: true
+log_frequency: 10
+save_frequency: 500
+wandb_project_name: rh-cont-${learner.name}-lstm
+work_dir: ${root_dir}/control-trainings
+experiment: lstm_${dataset.input_type}_${dataset.motor_data_type}_${hand_type}_${dataset.finger_name}
+# hydra configuration - should be received separately
+
+hydra:
+    run:
+        dir: ${work_dir}/out/${now:%Y.%m.%d}/${now:%H-%M-%S}-${hand_type}-${dataset.finger_name}/0
+
+    sweep:
+        dir: ${work_dir}/out/${now:%Y.%m.%d}/${now:%H-%M-%S}-${hand_type}-${dataset.finger_name}
+        subdir: ${hydra.job.num}

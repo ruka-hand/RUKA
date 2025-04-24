@@ -1,0 +1,45 @@
+<mujoco>
+  <!-- Default settings for cube class -->
+  <default>
+    <default class="cube">
+      <geom friction="1.0 0.01 0.001" conaffinity="2" condim="3"/>
+    </default>
+  </default>
+
+  <!-- Asset definitions including textures and materials -->
+  <asset>
+    <!-- Cube texture and material -->
+    <texture name="cube" type="cube" fileup="reorientation_cube_textures/fileup.png"
+      fileback="reorientation_cube_textures/fileback.png" filedown="reorientation_cube_textures/filedown.png"
+      filefront="reorientation_cube_textures/filefront.png" fileleft="reorientation_cube_textures/fileleft.png"
+      fileright="reorientation_cube_textures/fileright.png"/>
+    <material name="cube" texture="cube"/>
+    
+    <!-- Gray cube texture and material -->
+    <texture name="graycube" type="cube" fileup="reorientation_cube_textures/grayup.png"
+      fileback="reorientation_cube_textures/grayback.png" filedown="reorientation_cube_textures/graydown.png"
+      filefront="reorientation_cube_textures/grayfront.png" fileleft="reorientation_cube_textures/grayleft.png"
+      fileright="reorientation_cube_textures/grayright.png"/>
+    <material name="graycube" texture="graycube"/>
+    
+    <!-- Dexterity cube texture and material -->
+    <texture name="dexcube" type="2d" file="reorientation_cube_textures/dex_cube.png"/>
+    <material name="dexcube" texture="dexcube"/>
+    
+    <!-- Mesh for the cube -->
+    <mesh name="cube_mesh" file="meshes/dex_cube.obj" scale=".024 .024 .024"/>
+  </asset>
+
+  <!-- World body definition for the cube -->
+  <worldbody>
+    <body name="cube" pos="0.007 0.045 -0.05" quat="1 0 0 0" childclass="cube">
+      <!-- Free joint for the cube -->
+      <freejoint name="cube_freejoint"/>
+      <!-- Geometries for the cube -->
+      <geom type="mesh" mesh="cube_mesh" material="dexcube" contype="0" conaffinity="0" density="0" group="0"/>
+      <geom name="cube" type="box" size=".024 .024 .024" mass=".058" group="2"/>
+      <!-- Site at the center of the cube -->
+      <site name="cube_center" pos="0 0 0" group="4" size="0.001"/>
+    </body>
+  </worldbody>
+</mujoco>
