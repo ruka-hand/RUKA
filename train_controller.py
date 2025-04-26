@@ -12,9 +12,6 @@ from ruka_hand.learning.dataloaders import get_dataloaders
 from ruka_hand.utils.initialize_learner import init_learner
 from ruka_hand.utils.logger import Logger
 
-# TODO: Add dataset_stats.pkl dumping here!!!
-
-
 class Workspace:
     def __init__(self, cfg: DictConfig) -> None:
         print(f"Workspace config: {OmegaConf.to_yaml(cfg)}")
