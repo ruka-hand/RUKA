@@ -66,7 +66,7 @@ Update the `USB_PORTS` dictionary in `ruka_hand/utils/constants.py` accordingly,
 
 You can try moving the motors to the reset position by running:
 ```
-python scripts/reset_motors.py --hand-type <right|left>
+python scripts/reset_motors.py --hand_type <right|left>
 ```
 If this moves the intended hand then it means that the initial software is completed!
 
