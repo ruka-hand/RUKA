@@ -181,7 +181,7 @@ To run teleoperation with MANUS:
   cd ./submodules/Bidex_Manus_Teleop/MANUS_Core_2.4.0_SDK/SDKClient_Linux
   ./SDKClient_Linux.out
   ```
-  Choose the option `[1] Core Integrated - This will run standalone without the need for a MANUS Core connection`, then navigate to the Glove Menu. You should see the joint angles change as you move your fingers.
+  Choose the option `[1] Core Integrated - This will run standalone without the need for a MANUS Core connection`, then navigate to the Glove Menu. You should see the joint angles change as you move your fingers. **NOTE:** Here, if you get *Device Manager: Unable to open device -LSBUSB* error, make sure you have packages that are mentioned at [the MANUS SDK Instructions](https://docs.manus-meta.com/2.3.0/Plugins/SDK/Linux/Installation/) installed and try running the binary file with sudo privileges: `sudo ./SDKClient_Linux.out`. 
 * Edit `HOST`, `LEFT_GLOVE_ID` and `RIGHT_GLOVE_ID` variables in `ruka_hand/utils/constants.py` accordingly to your workstation's IP address, and corresponding glove ids.
 * Once the MANUS stream is running, execute the following command in a new terminal:
   ```
