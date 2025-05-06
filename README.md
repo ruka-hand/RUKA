@@ -70,6 +70,17 @@ python scripts/reset_motors.py --hand_type <right|left>
 ```
 If this moves the intended hand then it means that the initial software is completed!
 
+**NOTE:**
+If you get an error saying that 
+```
+serial.serialutil.SerialException: [Errno 13] could not open port /dev/ttyUSB0: [Errno 13] Permission denied: '/dev/ttyUSB0'
+```
+You might need to run following commands to add your user to `dialout` group and reboot the machine for it to take effect.
+```
+sudo usermod -aG dialout $USER
+sudo reboot
+```
+
 ### Calibrating Motor Ranges
 Since RUKA is a tendon-driven hand, cable tensions can vary between different builds. To ensure consistency across builds, we provide a calibration script that automatically determines the motor ranges.  
 Run the following command to save the motor limits to `RUKA/motor_limits/<left|right>_motor_limits.npy`:  
