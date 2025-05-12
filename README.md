@@ -96,7 +96,7 @@ If everything works well, this is how the calibration code should look like:
  </p>
 
 During calibration, we sometimes observe that the knuckle joints don't fully curl. If you notice this behavior (for example, the index finger not fully curling as shown in the provided GIF), please gently push the finger to complete the curl.
-After running the calibration, execute python scripts/reset_motors.py --hand-type <right|left>. This should move the fingers to a fully open position, with the tendons tensioned but the fingers remaining extended.
+After running the calibration, execute `python scripts/reset_motors.py --hand-type <right|left>`. This should move the fingers to a fully open position, with the tendons tensioned but the fingers remaining extended.
 
 ## Installing and Using Pre Trained Controllers
 
