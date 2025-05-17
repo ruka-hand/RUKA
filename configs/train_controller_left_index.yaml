@@ -35,7 +35,7 @@ all_data_directories:
 hand_type: left
 
 dataset: 
-  _target_: ruka_hand.dataset.all_hand_data_motor.AllHandDataMotor
+  _target_: ruka_hand.learning.dataset.AllHandDataMotor
   data_dir: ??? 
   finger_name: Index 
   model_type: inverse 
