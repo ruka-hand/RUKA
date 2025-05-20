@@ -182,7 +182,12 @@ To run teleoperation with MANUS:
   ./SDKClient_Linux.out
   ```
   Choose the option `[1] Core Integrated - This will run standalone without the need for a MANUS Core connection`, then navigate to the Glove Menu. You should see the joint angles change as you move your fingers. **NOTE:** Here, if you get *Device Manager: Unable to open device -LSBUSB* error, make sure you have packages that are mentioned at [the MANUS SDK Instructions](https://docs.manus-meta.com/2.3.0/Plugins/SDK/Linux/Installation/) installed and try running the binary file with sudo privileges: `sudo ./SDKClient_Linux.out`. 
-* Edit `HOST`, `LEFT_GLOVE_ID` and `RIGHT_GLOVE_ID` variables in `ruka_hand/utils/constants.py` accordingly to your workstation's IP address, and corresponding glove ids.
+* Edit `HOST`, `LEFT_GLOVE_ID` and `RIGHT_GLOVE_ID` variables in `ruka_hand/utils/constants.py` accordingly to your workstation's IP address, and corresponding glove ids. Example variables would be:
+  ```
+  HOST = '127.0.0.1' 
+  LEFT_GLOVE_ID = "80fe19af" # - Input your own glove ids here
+  RIGHT_GLOVE_ID = "cd25c9c6" # - Input your own glove ids here
+  ```
 * Once the MANUS stream is running, execute the following command in a new terminal:
   ```
   python teleop.py --hand-type <left|right> --mode manus
