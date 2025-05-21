@@ -130,12 +130,10 @@ class Preprocessor:
         save_dirs,
         frequency,
         module_keys=["manus", "ruka", "right_arm", "left_arm"],
-        visualize=False,
     ):
         self.save_dirs = save_dirs
         self.time_difference = 1 / frequency
         self.frequency = frequency
-        self.visualize = visualize
 
         self._start_modules(module_keys)
 
@@ -164,7 +162,6 @@ class Preprocessor:
         self._update_root(save_dir)
         self._dump_data()
         print(f"** PREPROCESSING DONE IN {save_dir} **")
-        self._visualize(save_dir)
 
     def get_processes(self):
 

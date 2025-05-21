@@ -32,7 +32,6 @@ def preprocess(save_dirs):
         save_dirs=save_dirs,
         frequency=-1,
         module_keys=["manus", "ruka"],
-        visualize=False,
     )
 
     processes = preprocessor.get_processes()
