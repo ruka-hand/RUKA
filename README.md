@@ -66,9 +66,20 @@ Update the `USB_PORTS` dictionary in `ruka_hand/utils/constants.py` accordingly,
 
 You can try moving the motors to the reset position by running:
 ```
-python scripts/reset_motors.py --hand-type <right|left>
+python scripts/reset_motors.py --hand_type <right|left>
 ```
 If this moves the intended hand then it means that the initial software is completed!
+
+**NOTE:**
+If you get an error saying that 
+```
+serial.serialutil.SerialException: [Errno 13] could not open port /dev/ttyUSB0: [Errno 13] Permission denied: '/dev/ttyUSB0'
+```
+You might need to run following commands to add your user to `dialout` group and reboot the machine for it to take effect.
+```
+sudo usermod -aG dialout $USER
+sudo reboot
+```
 
 ### Calibrating Motor Ranges
 Since RUKA is a tendon-driven hand, cable tensions can vary between different builds. To ensure consistency across builds, we provide a calibration script that automatically determines the motor ranges.  
@@ -85,7 +96,7 @@ If everything works well, this is how the calibration code should look like:
  </p>
 
 During calibration, we sometimes observe that the knuckle joints don't fully curl. If you notice this behavior (for example, the index finger not fully curling as shown in the provided GIF), please gently push the finger to complete the curl.
-After running the calibration, execute python scripts/reset_motors.py --hand-type <right|left>. This should move the fingers to a fully open position, with the tendons tensioned but the fingers remaining extended.
+After running the calibration, execute `python scripts/reset_motors.py --hand-type <right|left>`. This should move the fingers to a fully open position, with the tendons tensioned but the fingers remaining extended.
 
 ## Installing and Using Pre Trained Controllers
 
@@ -170,8 +181,13 @@ To run teleoperation with MANUS:
   cd ./submodules/Bidex_Manus_Teleop/MANUS_Core_2.4.0_SDK/SDKClient_Linux
   ./SDKClient_Linux.out
   ```
-  Choose the option `[1] Core Integrated - This will run standalone without the need for a MANUS Core connection`, then navigate to the Glove Menu. You should see the joint angles change as you move your fingers.
-* Edit `HOST`, `LEFT_GLOVE_ID` and `RIGHT_GLOVE_ID` variables in `ruka_hand/utils/constants.py` accordingly to your workstation's IP address, and corresponding glove ids.
+  Choose the option `[1] Core Integrated - This will run standalone without the need for a MANUS Core connection`, then navigate to the Glove Menu. You should see the joint angles change as you move your fingers. **NOTE:** Here, if you get *Device Manager: Unable to open device -LSBUSB* error, make sure you have packages that are mentioned at [the MANUS SDK Instructions](https://docs.manus-meta.com/2.3.0/Plugins/SDK/Linux/Installation/) installed and try running the binary file with sudo privileges: `sudo ./SDKClient_Linux.out`. 
+* Edit `HOST`, `LEFT_GLOVE_ID` and `RIGHT_GLOVE_ID` variables in `ruka_hand/utils/constants.py` accordingly to your workstation's IP address, and corresponding glove ids. Example variables would be:
+  ```
+  HOST = '127.0.0.1' 
+  LEFT_GLOVE_ID = "80fe19af" # - Input your own glove ids here
+  RIGHT_GLOVE_ID = "cd25c9c6" # - Input your own glove ids here
+  ```
 * Once the MANUS stream is running, execute the following command in a new terminal:
   ```
   python teleop.py --hand-type <left|right> --mode manus

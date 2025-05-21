@@ -24,3 +24,4 @@ flask
 shapely
 opencv-contrib-python
 record3d
+osfclient
