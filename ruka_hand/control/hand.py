@@ -172,7 +172,12 @@ class Hand:
     # read position
     def read_pos(self):
         # print(f"in read_pos")
-        return self.dxl_client.read_pos()
+        curr_pos = self.dxl_client.read_pos()
+        while curr_pos is None:
+            curr_pos = self.dxl_client.read_pos()
+            time.sleep(0.001)
+
+        return curr_pos
 
     # read velocity
     def read_vel(self):
