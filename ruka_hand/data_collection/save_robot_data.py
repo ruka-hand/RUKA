@@ -36,8 +36,8 @@ class RUKADataCollector(Recorder):
 
         self._data_names = dict(
             present_position="Present Position",
-            temperature="Present Temperature",
-            current="Present Current",
+            # temperature="Present Temperature",
+            # current="Present Current",
         )
 
         self.num_datapoints = 0
@@ -169,8 +169,9 @@ class RUKADataCollector(Recorder):
 
         print("Saving data with random walk")
         pbar = tqdm(total=sample_num * walk_len)
-        for sample_id in range(sample_num):
-            try:
+        try:
+            for sample_id in range(sample_num):
+            
                 des_hand_pos = copy(self.hand.tensioned_pos)
                 walk_ranges = dict()
                 desired_poses = dict()
@@ -233,12 +234,15 @@ class RUKADataCollector(Recorder):
                     pbar.update(1)
                     pbar.set_description(f"Sample: {sample_id} | Step: {step_id}")
 
-            except KeyboardInterrupt:
-                break
+        except Exception as e:
+            print(f'Exception {e} caught')
 
-        pbar.close()
-        print(f"** ROBOT SAVING DONE IN {self._recorder_file_name}")
-        self.record_end_time = time.time()
-        self._compress_data(data_dict=self.ruka_data)
-        print("Saved manus_data data in {}.".format(self._recorder_file_name))
-        self.hand.close()
+        finally:
+            # break
+
+            pbar.close()
+            print(f"** ROBOT SAVING DONE IN {self._recorder_file_name}")
+            self.record_end_time = time.time()
+            self._compress_data(data_dict=self.ruka_data)
+            print("Saved manus_data data in {}.".format(self._recorder_file_name))
+            self.hand.close()
