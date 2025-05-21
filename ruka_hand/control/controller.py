@@ -25,7 +25,7 @@ class HandController:
         hand_type,
         frequency,
         single_move_len=1,
-        device="cuda",
+        device="cpu",
         record=False,
         data_save_dir=None,
     ):
@@ -94,7 +94,7 @@ class HandController:
 
             # Load the trained model
             learner = init_learner(cfg=cfg, device=self.device)
-            learner.load(model_path, training_cfg=cfg, model_type=checkpoint)
+            learner.load(model_path, training_cfg=cfg, model_type=checkpoint, device=self.device)
             learner.eval()
             learner.to(self.device)
 
