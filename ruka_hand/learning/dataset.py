@@ -171,6 +171,13 @@ class AllHandDataMotor(data.Dataset):
             stats=self.stats["input"],
             normalize=True,
         )
+        pre_intput_data = handle_normalization(
+            self.input_data[
+                i + self.obs_horizon - self.pred_horizon : i + self.obs_horizon
+            ],
+            stats=self.stats["input"],
+            normalize=True,
+        )
         next_motor_pos = handle_normalization(
             self.motor_positions[
                 i + self.obs_horizon : i + self.obs_horizon + self.pred_horizon
@@ -185,6 +192,7 @@ class AllHandDataMotor(data.Dataset):
             stats=self.stats["motor"],
             normalize=True,
         )
+        
 
         if self.model_type == "forward":  # input is the motors
             if self.state_as_input:
@@ -193,7 +201,7 @@ class AllHandDataMotor(data.Dataset):
                 input_data = curr_motor_pos
 
             if self.predict_residual:
-                output_data = next_input_data - prev_motor_pos
+                output_data = next_input_data - pre_intput_data
             else:
                 output_data = next_input_data
 
