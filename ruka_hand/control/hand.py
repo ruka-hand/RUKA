@@ -63,7 +63,10 @@ class Hand:
                 )
             else:
                 self.curled_bound = np.ones(11) * MOTOR_RANGES_RIGHT
-            self.tensioned_pos = self.curled_bound - MOTOR_RANGES_RIGHT
+            
+            # NOTE: In the instruction, "Set position to around 100 for the right hand"
+            # Too close 0 can mess up the pos reading
+            self.tensioned_pos = 300 + self.curled_bound - MOTOR_RANGES_RIGHT
 
             self.min_lim, self.max_lim = self.tensioned_pos, self.curled_bound
         elif hand_type == "left":
@@ -72,7 +75,8 @@ class Hand:
                     f"{repo_root}/motor_limits/left_motor_limits.npy"
                 )
             else:
-                self.curled_bound = 4000 - np.ones(11) * MOTOR_RANGES_LEFT
+                # Too close 0/4096 can mess up the pos reading
+                self.curled_bound = 3800 - np.ones(11) * MOTOR_RANGES_LEFT
             self.tensioned_pos = self.curled_bound + MOTOR_RANGES_LEFT
 
             self.min_lim, self.max_lim = self.curled_bound, self.tensioned_pos
